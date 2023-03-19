@@ -8,16 +8,16 @@
 
 <PageTitle>All Things Movie and TV</PageTitle>
 
-<div class="container">
+<div class="container ontario-padding-top-16-!">
 
     @foreach (var film in filmResults)
     {
         <div class="item-container">
             <img src="@film.Poster" alt="@film.Title" />
-            <div class="content">@film.Title</div>
-            <div class="content">@film.Year</div>
-            <div class="content">@film.Actors</div>
-            <div class="plot">@film.Plot</div>
+            <div class="content ontario-margin-top-16-! ontario-margin-left-8-! ontario-margin-right-8-! "><strong>@film.Title</strong></div>
+            <div class="content ontario-margin-left-8-! ontario-margin-right-8-! ">@film.Year</div>
+            <div class="content ontario-margin-left-8-! ontario-margin-right-8-!">@film.Actors</div>
+            <div class="plot ontario-margin-bottom-16-! ontario-margin-left-8-! ontario-margin-right-8-!"><cite>@film.Plot</cite></div>
         </div>
     }
 </div>

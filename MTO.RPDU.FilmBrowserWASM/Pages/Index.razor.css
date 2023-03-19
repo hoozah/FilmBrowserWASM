@@ -13,10 +13,18 @@ img {
     object-fit: cover;
     width: 100%;
     border-radius: 1rem 1rem 0 0;
+    grid-row: 1 / -1;
+    grid-column: 1;
 }
 
 .item-container {
-    display: block;
+    margin: 0;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    margin-bottom: 10px;
+    break-inside: avoid;
+    -webkit-box-shadow: 3px 3px 10px -1px rgba(0,0,0,0.3);
+    box-shadow: 3px 3px 10px -1px rgba(0,0,0,0.3);
     border-radius: 1rem;
 }
 
@@ -26,18 +34,22 @@ img {
     overflow: hidden;
 }
 
-.plot {
-/*    overflow: hidden;
-    max-width: 75ch;
-    text-overflow: ellipsis;*/
-/*    white-space: nowrap;*/
+.container {
+    column-count: 3;
+    column-gap: 8px;
+    padding-bottom: 200px;
 }
 
-.container {
-    margin: .5rem .5rem;
-    padding: .5rem .5rem;
-    display: grid;
-    grid-gap: .5rem;
-    grid-template-columns: repeat(auto-fill, minmax(16rem, 2fr));
-    grid-auto-flow: row;
+@media screen and (max-width: 72em) {
+    .container {
+        column-count: 2;
+        column-gap: 8px;
+    }
+}
+
+@media screen and (max-width: 40em) {
+    .container {
+        column-count: 1;
+        column-gap: 8px;
+    }
 }
