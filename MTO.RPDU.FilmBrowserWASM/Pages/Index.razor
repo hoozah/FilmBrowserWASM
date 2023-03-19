@@ -1,4 +1,10 @@
 ﻿@page "/"
+@using MTO.RPDU.FilmBrowserWASM.Clients;
+@using System.Threading.Tasks
+@using System.Text.Json;
+@using MTO.RPDU.FilmBrowserWASM.Models.Omdb;
+@using System.Text;
+@inject OmdbHttpClient client
 
 <PageTitle>Index</PageTitle>
 
@@ -6,4 +12,25 @@
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<p>@result</p>
+
+
+@code {
+    private string result;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await client.SearchFilmsByTitle("lord");
+        var films = new List<FilmResult>();
+        var sb = new StringBuilder();
+
+        foreach(var record in response.Search)
+        {
+            var film = await client.GetFilmById(record.imdbID!);
+            sb.AppendLine(JsonSerializer.Serialize(film));
+        }
+
+
+        result = sb.ToString();
+    }
+}
