@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace MTO.RPDU.FilmBrowserWASM.Clients
+namespace MTO.RPDU.FilmBrowserWASM.HttpClients
 {
     public class OmdbHttpClient
     {

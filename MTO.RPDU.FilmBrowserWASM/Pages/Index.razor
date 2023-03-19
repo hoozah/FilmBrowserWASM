@@ -1,43 +1,26 @@
 ﻿@page "/"
-@using MTO.RPDU.FilmBrowserWASM.Clients;
 @using System.Threading.Tasks
 @using System.Text.Json;
+@using MTO.RPDU.FilmBrowserWASM.HttpClients;
+@using MTO.RPDU.FilmBrowserWASM.Models.FilmBrowser;
 @using MTO.RPDU.FilmBrowserWASM.Models.Omdb;
 @using System.Text;
+@using MTO.RPDU.FilmBrowserWASM.Services;
 @inject OmdbHttpClient client
 
 <PageTitle>All Things Movie and TV</PageTitle>
 
 <div class="container ontario-padding-top-16-!">
 
-    @foreach (var film in filmResults)
+    @foreach (var film in films)
     {
-        <div class="item-container">
+        <div class="item-container ontario-margin-top-0-">
             <img src="@film.Poster" alt="@film.Title" />
             <div class="content ontario-margin-top-16-! ontario-margin-left-8-! ontario-margin-right-8-! "><strong>@film.Title</strong></div>
             <div class="content ontario-margin-left-8-! ontario-margin-right-8-! ">@film.Year</div>
+            <div class="content ontario-margin-left-8-! ontario-margin-right-8-! ">@film.Genre</div>
             <div class="content ontario-margin-left-8-! ontario-margin-right-8-!">@film.Actors</div>
             <div class="plot ontario-margin-bottom-16-! ontario-margin-left-8-! ontario-margin-right-8-!"><cite>@film.Plot</cite></div>
         </div>
     }
 </div>
-
-
-@code {
-    private List<FilmResult> filmResults;
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (filmResults == null) filmResults = new List<FilmResult>();
-
-        var response = await client.SearchFilmsByTitle("lord");
-        var films = new List<FilmResult>();
-        var sb = new StringBuilder();
-
-        foreach(var record in response.Search)
-        {
-            var film = await client.GetFilmById(record.imdbID!);
-            filmResults.Add(film);
-        }
-    }
-}
