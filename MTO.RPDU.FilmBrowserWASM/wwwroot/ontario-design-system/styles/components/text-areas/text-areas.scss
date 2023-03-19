@@ -1,0 +1,10 @@
+@use '@ontario-digital-service/ontario-design-system-global-styles/dist/styles/scss/1-variables/global.variables' as globalVariables;
+@use '@ontario-digital-service/ontario-design-system-global-styles/dist/styles/scss/1-variables/spacing.variables' as spacing;
+
+.ontario-textarea {
+	display: block;
+	width: globalVariables.$full-width;
+	min-height: 144px;
+	margin: spacing.$spacing-0 spacing.$spacing-0 spacing.$spacing-5;
+	white-space: pre-wrap;
+}

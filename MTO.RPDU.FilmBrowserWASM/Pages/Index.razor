@@ -6,20 +6,30 @@
 @using System.Text;
 @inject OmdbHttpClient client
 
-<PageTitle>Index</PageTitle>
+<PageTitle>All Things Movie and TV</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="container">
 
-Welcome to your new app.
-
-<p>@result</p>
+    @foreach (var film in filmResults)
+    {
+        <div class="item-container">
+            <img src="@film.Poster" alt="@film.Title" />
+            <div class="content">@film.Title</div>
+            <div class="content">@film.Year</div>
+            <div class="content">@film.Actors</div>
+            <div class="plot">@film.Plot</div>
+        </div>
+    }
+</div>
 
 
 @code {
-    private string result;
+    private List<FilmResult> filmResults;
 
     protected override async Task OnInitializedAsync()
     {
+        if (filmResults == null) filmResults = new List<FilmResult>();
+
         var response = await client.SearchFilmsByTitle("lord");
         var films = new List<FilmResult>();
         var sb = new StringBuilder();
@@ -27,10 +37,7 @@ Welcome to your new app.
         foreach(var record in response.Search)
         {
             var film = await client.GetFilmById(record.imdbID!);
-            sb.AppendLine(JsonSerializer.Serialize(film));
+            filmResults.Add(film);
         }
-
-
-        result = sb.ToString();
     }
 }

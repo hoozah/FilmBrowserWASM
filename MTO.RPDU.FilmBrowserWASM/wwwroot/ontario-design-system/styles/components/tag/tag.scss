@@ -1,0 +1,42 @@
+@use '@ontario-digital-service/ontario-design-system-global-styles/dist/styles/scss/1-variables/global.variables' as globalVariables;
+@use '@ontario-digital-service/ontario-design-system-global-styles/dist/styles/scss/1-variables/colours.variables' as colours;
+@use '@ontario-digital-service/ontario-design-system-global-styles/dist/styles/scss/1-variables/breakpoints.variables' as breakpoints;
+@use '@ontario-digital-service/ontario-design-system-global-styles/dist/styles/scss/1-variables/typography.variables' as typography;
+@use '@ontario-digital-service/ontario-design-system-global-styles/dist/styles/scss/1-variables/spacing.variables' as spacing;
+
+.ontario-tag {
+	border: none;
+	border-radius: globalVariables.$global-radius * 3;
+	box-sizing: border-box;
+	box-shadow: none;
+	display: inline-block;
+	font-size: 0.625rem;
+	font-weight: 500;
+	font-family: typography.$ontario-font-raleway-modified;
+	font-style: normal;
+	padding: spacing.$spacing-0 spacing.$spacing-3;
+	text-align: center;
+	text-decoration: none;
+	background: colours.$ontario-greyscale-20;
+	color: colours.$ontario-colour-black;
+
+	@media screen and (min-width: breakpoints.$small-breakpoint) {
+		font-size: 0.875rem;
+	}
+}
+
+.ontario-tag--lime {
+	background: colours.$ontario-colour-lime;
+}
+
+.ontario-tag--gold {
+	background: colours.$ontario-colour-gold;
+}
+
+.ontario-tag--yellow {
+	background: colours.$ontario-colour-yellow;
+}
+
+.ontario-tag--taupe {
+	background: colours.$ontario-colour-taupe;
+}
