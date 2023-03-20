@@ -3,6 +3,7 @@ using MTO.RPDU.FilmBrowserWASM.Contexts;
 using MTO.RPDU.FilmBrowserWASM.HttpClients;
 using MTO.RPDU.FilmBrowserWASM.Models.FilmBrowser;
 using MTO.RPDU.FilmBrowserWASM.Models.Omdb;
+using SqliteWasmHelper;
 using System.Net.Http.Json;
 
 namespace MTO.RPDU.FilmBrowserWASM.Services
@@ -10,13 +11,13 @@ namespace MTO.RPDU.FilmBrowserWASM.Services
     public class FilmService
     {
 
-        private readonly IDbContextFactory<FilmDbContext> _factory;
+        private readonly ISqliteWasmDbContextFactory<FilmDbContext> _factory;
         private readonly HttpClient _httpClient;
         private readonly CognitiveServiceHttpClient _cognitiveServiceHttpClient;
 
 
         private bool _hasSynced = false;
-        public FilmService(IDbContextFactory<FilmDbContext> factory, HttpClient httpClient, CognitiveServiceHttpClient cognitiveServiceHttpClient)
+        public FilmService(ISqliteWasmDbContextFactory<FilmDbContext> factory, HttpClient httpClient, CognitiveServiceHttpClient cognitiveServiceHttpClient)
         {
             _factory = factory;
             _httpClient = httpClient;
