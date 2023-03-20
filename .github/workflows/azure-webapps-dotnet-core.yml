@@ -51,6 +51,9 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
+            
+      - name: Install wasm-tools
+        run: dotnet workload install wasm-tools-net6        
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
