@@ -34,17 +34,23 @@ img {
 }
 
 .container {
-    column-count: 3;
+    column-count: 4;
     column-gap: 0;
 }
 
 @media screen and (max-width: 72em) {
     .container {
-        column-count: 2;
+        column-count: 3;
     }
 }
 
 @media screen and (max-width: 40em) {
+    .container {
+        column-count: 2;
+    }
+}
+
+@media screen and (max-width: 30em) {
     .container {
         column-count: 1;
     }

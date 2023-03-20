@@ -15,4 +15,5 @@ main {
     width: 100%;
     max-width: 72rem;
     padding-bottom: 8.5rem;
+    min-height: 60vh;
 }
