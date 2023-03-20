@@ -7,6 +7,9 @@ using MTO.RPDU.FilmBrowserWASM.Services;
 using System.Diagnostics.CodeAnalysis;
 using SqliteWasmHelper;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using Microsoft.JSInterop;
+using System.Text.RegularExpressions;
 
 namespace MTO.RPDU.FilmBrowserWASM
 {
@@ -29,7 +32,25 @@ namespace MTO.RPDU.FilmBrowserWASM
             //builder.Services.AddFilmsFeature();
             builder.Services.AddScoped<FilmService>();
             builder.Services.AddSqliteWasmDbContextFactory<FilmDbContext>(opts => opts.UseSqlite("Data Source=films.db"));
+            builder.Services.AddLocalization();
+
             var host = builder.Build();
+            var js = host.Services.GetRequiredService<IJSRuntime>();
+            var result = await js.InvokeAsync<string>("blazorCulture.get");
+            CultureInfo culture;
+            if (result != null)
+            {
+                culture = new CultureInfo(result);
+            }
+            else
+            {
+                culture = new CultureInfo("en-CA");
+                await js.InvokeVoidAsync("blazorCulture.set", "en-CA");
+            }
+
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+
             await host.InitializeFilmsFeature();
             await host.RunAsync();
 

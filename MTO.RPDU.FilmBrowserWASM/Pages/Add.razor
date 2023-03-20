@@ -1,4 +1,6 @@
 ﻿@page "/add"
+@inject IStringLocalizer<Add> Loc
+
 <div class="ontario-padding-bottom-16-! ontario-padding-top-16-! ontario-padding-left-16-! ontario-padding-right-16-!">
     <div class="ontario-alert ontario-alert--success" hidden="@(!isSaved)">
         <div class="ontario-alert__header">
@@ -8,29 +10,29 @@
                     <path d="m5 12 5 5 8.58-8.58L17.17 7 10 14.17 6.4 10.6 5 12z" fill="#fff" />
                 </svg>
             </div>
-            <h2 class="ontario-alert__header-title ontario-h4">Success!</h2>
+            <h2 class="ontario-alert__header-title ontario-h4">@Loc["success"] Success!</h2>
         </div>
         <div class="ontario-alert__body">
             <p>
-                Your changes have been saved. 🎉
+                @Loc["saved"]
             </p>
         </div>
     </div>
     <div class="ontario-form-group">
         <label class="ontario-label" for="title">
-            Add Movie or TV
+            @Loc["label"]
         </label>
-        <p class="ontario-hint" id="title-hint">Please enter a movie or tv title to add.</p>
+        <p class="ontario-hint" id="title-hint">@Loc["helperText"] </p>
         <input aria-describedby="title-hint" class="ontario-input" type="text" id="title" @bind="titleValue">
         <button class="ontario-button ontario-button--primary" @onclick="Search">
-            Search
+            @Loc["search"]
         </button>
     </div>
     <hr hidden="@(!isChecklistVisible)" />
     <div class="ontario-form-group" hidden="@(!isChecklistVisible)">
         <fieldset class="ontario-fieldset">
             <legend class="ontario-fieldset__legend">
-                Please select titles to add
+                @Loc["checklistLabel"] 
             </legend>
             <div class="ontario-checkboxes ontario-padding-bottom-32-!">
                 @foreach (var search in searches)
@@ -44,7 +46,7 @@
                 }
             </div>
             <button class="ontario-button ontario-button--primary" @onclick="AddItems">
-                Add
+                @Loc["add"]
             </button>
         </fieldset>
 
