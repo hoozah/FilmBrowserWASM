@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using MTO.RPDU.FilmBrowserWASM.Models.FilmBrowser;
 using MTO.RPDU.FilmBrowserWASM.Services;
 
@@ -7,6 +8,7 @@ namespace MTO.RPDU.FilmBrowserWASM.Pages
     public partial class Index
     {
         [Inject] private FilmService _filmService { get; set; } = default!;
+        [Inject] IJSRuntime JS { get; set; } = default!;
 
         private List<Film> films;
 
@@ -15,19 +17,11 @@ namespace MTO.RPDU.FilmBrowserWASM.Pages
             if (films == null) films = new List<Film>();
 
             films = await _filmService.ListAsync();
+        }
 
-
-            //var response = await client.SearchFilmsByTitle("Harry Potter");
-            //var films = new List<FilmResult>();
-            //var sb = new StringBuilder();
-
-            //foreach(var record in response.Search)
-            //{
-            //    var film = await client.GetFilmById(record.imdbID!);
-            //    filmResults.Add(film);
-            //}
-
-
+        private async Task ScrollToTop()
+        {
+            await JS.InvokeVoidAsync("scrollToTop");
         }
     }
 }

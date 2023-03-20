@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MTO.RPDU.FilmBrowserWASM.Contexts;
+using MTO.RPDU.FilmBrowserWASM.HttpClients;
 using MTO.RPDU.FilmBrowserWASM.Models.FilmBrowser;
 using MTO.RPDU.FilmBrowserWASM.Models.Omdb;
 using System.Net.Http.Json;
@@ -11,12 +12,15 @@ namespace MTO.RPDU.FilmBrowserWASM.Services
 
         private readonly IDbContextFactory<FilmDbContext> _factory;
         private readonly HttpClient _httpClient;
+        private readonly CognitiveServiceHttpClient _cognitiveServiceHttpClient;
+
 
         private bool _hasSynced = false;
-        public FilmService(IDbContextFactory<FilmDbContext> factory, HttpClient httpClient)
+        public FilmService(IDbContextFactory<FilmDbContext> factory, HttpClient httpClient, CognitiveServiceHttpClient cognitiveServiceHttpClient)
         {
             _factory = factory;
             _httpClient = httpClient;
+            _cognitiveServiceHttpClient = cognitiveServiceHttpClient;
         }
 
         public async Task InitializeAsync()
@@ -28,7 +32,6 @@ namespace MTO.RPDU.FilmBrowserWASM.Services
             dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
             
-
             if (dbContext.Films.Count() > 0) return;
 
             var resultList = await _httpClient.GetFromJsonAsync<List<FilmResult>>("/sample-data/film.json");
@@ -36,10 +39,33 @@ namespace MTO.RPDU.FilmBrowserWASM.Services
             {
                 foreach(var result in resultList)
                 {
-                    await dbContext.Films.AddAsync(MapToFilm(result));
+                    var filmData = MapToFilm(result);
+
+                    //var plotFr = await _cognitiveServiceHttpClient.TransalateAsync(result.Plot);
+                    //var genreFr = await _cognitiveServiceHttpClient.TransalateAsync(result.Genre);
+
+                    //filmData.PlotFr = plotFr;
+                    //filmData.GenreFr = genreFr;
+
+                    await dbContext.Films.AddAsync(filmData);
                 }
             }
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task AddFilmAsync(FilmResult result)
+        {
+            await using var dbContext = await _factory.CreateDbContextAsync();
+
+            var film = MapToFilm(result);
+
+            var existingFilm = await dbContext.Films.FirstOrDefaultAsync(x => x.ImdbId != null && x.ImdbId.Equals(film.ImdbId));
+
+            if (existingFilm == null)
+            {
+                await dbContext.Films.AddAsync(film);
+                await dbContext.SaveChangesAsync();
+            }
         }
 
         public async Task<List<Film>> ListAsync()

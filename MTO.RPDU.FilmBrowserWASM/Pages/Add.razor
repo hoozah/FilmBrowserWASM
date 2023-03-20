@@ -1,0 +1,56 @@
+﻿@page "/add"
+<div class="ontario-padding-bottom-16-! ontario-padding-top-16-! ontario-padding-left-16-! ontario-padding-right-16-!">
+    <div class="ontario-alert ontario-alert--success" hidden="@(!isSaved)">
+        <div class="ontario-alert__header">
+            <div class="ontario-alert__header-icon">
+                <svg class="ontario-icon" alt="" aria-hidden="true" focusable="false" sol:category="primary" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15-5-5 1.4-1.4 3.6 3.58L17.17 7l1.4 1.42L10 17z" fill="#118847" />
+                    <path d="m5 12 5 5 8.58-8.58L17.17 7 10 14.17 6.4 10.6 5 12z" fill="#fff" />
+                </svg>
+            </div>
+            <h2 class="ontario-alert__header-title ontario-h4">Success!</h2>
+        </div>
+        <div class="ontario-alert__body">
+            <p>
+                Your changes have been saved. 🎉
+            </p>
+        </div>
+    </div>
+    <div class="ontario-form-group">
+        <label class="ontario-label" for="title">
+            Add Movie or TV
+        </label>
+        <p class="ontario-hint" id="title-hint">Please enter a movie or tv title to add.</p>
+        <input aria-describedby="title-hint" class="ontario-input" type="text" id="title" @bind="titleValue">
+        <button class="ontario-button ontario-button--primary" @onclick="Search">
+            Search
+        </button>
+    </div>
+    <hr hidden="@(!isChecklistVisible)" />
+    <div class="ontario-form-group" hidden="@(!isChecklistVisible)">
+        <fieldset class="ontario-fieldset">
+            <legend class="ontario-fieldset__legend">
+                Please select titles to add
+            </legend>
+            <div class="ontario-checkboxes ontario-padding-bottom-32-!">
+                @foreach (var search in searches)
+                {
+                    <div class="ontario-checkboxes__item">
+                        <input class="ontario-checkboxes__input" id="chk_@search.imdbID" name="options" value="false" type="checkbox" @onchange="@(e => CheckboxChanged(e, search.imdbID))" />
+                        <label class="ontario-checkboxes__label" for="chk_@search.imdbID">
+                            @search.Title (@search.Year)
+                        </label>
+                    </div>
+                }
+            </div>
+            <button class="ontario-button ontario-button--primary" @onclick="AddItems">
+                Add
+            </button>
+        </fieldset>
+
+    </div>
+</div>
+
+@code {
+
+}
