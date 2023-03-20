@@ -1,12 +1,38 @@
-﻿@inherits LayoutComponentBase
+﻿@using System.Reflection;
+@inherits LayoutComponentBase
 
 <div class="page">
-<div>
+    <div>
         <MainMenu />
     </div>
     <main>
         <div class="row" id="main-container">
             @Body
+
         </div>
+        <footer class="ontario-footer ontario-footer--default ontario-margin-top-0-\!">
+            <div class="ontario-row">
+                <div class="ontario-columns ontario-small-12 ontario-padding-bottom-64-\!">
+                    <ul class="ontario-footer__links-container ontario-footer__links-container--inline">
+                        <li><a class="ontario-footer__link" href="https://www.ontario.ca/page/accessibility">Accessibility</a></li>
+                        <li><a class="ontario-footer__link" href="https://www.ontario.ca/page/privacy-statement">Privacy</a></li>
+                        <li><a class="ontario-footer__link" href="#">Contact us</a></li>
+                    </ul>
+                    <div class="ontario-footer__copyright">
+                        <a class="ontario-footer__link" href="https://www.ontario.ca/page/copyright-information">
+                            © King's Printer for Ontario,
+                            <span class="ontario-nbsp">2012–23</span>
+                        </a>
+                        <span>Build. @buildNumber</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </main>
 </div>
+
+@code {
+    string buildNumber = Assembly.GetExecutingAssembly()
+     .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+     .InformationalVersion;
+}

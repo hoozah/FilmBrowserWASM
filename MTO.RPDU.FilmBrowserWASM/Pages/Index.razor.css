@@ -36,7 +36,6 @@ img {
 .container {
     column-count: 3;
     column-gap: 0;
-    padding-bottom: 200px;
 }
 
 @media screen and (max-width: 72em) {
