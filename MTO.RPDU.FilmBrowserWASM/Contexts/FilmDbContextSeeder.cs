@@ -4,7 +4,6 @@
     {
         public static async void Seed(FilmDbContext dbContext)
         {
-            dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
             await dbContext.SaveChangesAsync();
         }

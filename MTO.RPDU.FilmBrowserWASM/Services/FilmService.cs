@@ -28,8 +28,6 @@ namespace MTO.RPDU.FilmBrowserWASM.Services
             if (_hasSynced) return;
 
             await using var dbContext = await _factory.CreateDbContextAsync();
-
-            dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
             
             if (dbContext.Films.Count() > 0) return;
